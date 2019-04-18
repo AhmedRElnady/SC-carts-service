@@ -23,13 +23,12 @@ const cartSchema = new mongoose.Schema({
     }],
     cartPrice: {
         type: Number,
-        require: true
+        default: 0,
     },
     cartStatus: {
         type: String,
         enum: ['PENDING', 'CANCELED', 'PAID'],
         default: 'PENDING',
-        required: true
     }
 }, { timestamps: true });
 

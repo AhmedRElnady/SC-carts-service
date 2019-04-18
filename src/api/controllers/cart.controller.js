@@ -6,22 +6,30 @@ const Cart = require('../../models/cart.model');
 const config = require('config');
 
 
-// add new item to shoppingCart
-// will be create after user login.
+// add a new shoppingCart if the use doesn't have one.
+// will be created after user login.
 router.post('/', async (req, res, next) => {
     try {
-        const createdProduct = await Product.create({
-            name: req.body.name,
-            inventory: req.body.inventory,
-            price: req.body.price,
-            description: req.body.description
-        });
-
-        res.status(201).json({
-            msg: 'Product is created successfully.'
+        const userId = req.body.userId;
+    
+        const userPendingCart = await Cart.findOne({ userId, cartStatus: 'PENDING' });
+        console.log(">>>> userPendingCart >>>", userPendingCart);
+        if (!userPendingCart) {
+            const createdCart = await Cart.create({
+                userId,
+                products: []
+            });
+            return res.status(201).json({
+                msg: 'A new shopping cart is created.',
+                data: createdCart._id
+            })
+        }
+        return res.status(200).json({
+            msg: 'The user already have a pending cart',
+            data: userPendingCart._id
         })
     } catch (e) {
-
+        console.log("... err ...", e)
     }
 })
 
