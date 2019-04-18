@@ -4,9 +4,27 @@ module.exports = {
            url: "http://localhost:4000",
            prefix: "products"
         },
-        shopping_cart: {
+        cart: {
            url: "http://localhost:5000",
            prefix: "shopping-carts"
+        }
+     },
+     acl: {
+        roles: {
+           CUSTOMER: {
+               resources: [
+                  "/:cartId",
+                  "/:cartId/items",
+                  "/:cartId/items/:itemId"
+               ],
+               permissions: ["get", "post", "delete"]
+           }, 
+           ADMIN: {
+               resources: [
+                  "/"
+               ],
+               permissions: ["get"]
+           }
         }
      }
 }
