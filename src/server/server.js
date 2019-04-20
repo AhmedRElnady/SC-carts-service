@@ -12,12 +12,6 @@ function bootstrap(port, dbHost, dbName) {
     return new Promise(async(resolve, reject) => {
         const dbInstance = await connect(dbHost, dbName)
         
-        // app.use((req, res, next) => {
-        //     req.db = dbInstance;
-        //     next()
-        // });
-
-
         app.use('/', (req, res, next) => {
 
             let contype = req.headers['content-type'];

@@ -3,7 +3,7 @@ const config = require('config');
 function authorize() {
     return (req, res, next) => {
         (async () => {
-        
+
             const tokenPayload = JSON.parse(req.headers['x-payload-header']),
                 userId = tokenPayload.id,
                 userRole = tokenPayload.role,
@@ -21,8 +21,10 @@ function authorize() {
                         const cartId = tokenPayload.cartId,
                             requestedCartId = req.params && req.params.cartId;
 
-                        if (!cartId || (requestedCartId !== cartId))
+                        if (!cartId || (requestedCartId !== cartId)) {
                             return res.json({ msg: "Insufficient permissions to access resource" })
+                        }
+
                     }
 
                     if (allowedResources.includes(reqResource) && allowedPermissions.includes(reqMethod)) {
@@ -30,11 +32,9 @@ function authorize() {
                     } else {
                         res.json({ msg: "Insufficient permissions to access resource" }) // 403
                     }
-
                     break;
                 }
             }
-            
         })();
     }
 }
