@@ -14,7 +14,7 @@ module.exports = {
            CUSTOMER: {
                resources: [
                   "/:cartId",
-                  "/:cartId/items",
+                  "/:cartId/items/:itemId",
                   "/:cartId/items/:itemId"
                ],
                permissions: ["get", "post", "delete"]
