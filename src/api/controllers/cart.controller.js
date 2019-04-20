@@ -30,7 +30,7 @@ router.get('/', authorize(), async (req, res, next) => {
 // get a specific cart, each user can only show his shoppingCart [customer]
 router.get('/:cartId', authorize(), async (req, res, next) => {
     try {
-        const cartId = req.params.id;
+        const cartId = req.params.cartId;
 
         const cart = await Cart.findById(cartId);
         if (!cart) return res.status(404).json({ msg: `The shopping cart with this id ${cartId} is not found ! ` })
@@ -39,7 +39,7 @@ router.get('/:cartId', authorize(), async (req, res, next) => {
             data: cart
         })
     } catch (e) {
-
+        
     }
 })
 
